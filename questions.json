@@ -1,0 +1,864 @@
+{
+  "chapters": {
+    "1": "Python 基础知识",
+    "2": "程序结构与输入输出",
+    "3": "选择结构与逻辑表达式",
+    "4": "循环结构",
+    "5": "字符串与正则表达式",
+    "6": "列表、元组与序列"
+  },
+  "questions": [
+    {
+      "id": "1-01",
+      "chapter": 1,
+      "text": "Python 语言属于（ ）。",
+      "options": {
+        "A": "机器语言",
+        "B": "汇编语言",
+        "C": "高级语言",
+        "D": "科学计算语言"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "1-02",
+      "chapter": 1,
+      "text": "下列选项中，不属于 Python 特点的是（ ）。",
+      "options": {
+        "A": "面向对象",
+        "B": "运行效率高",
+        "C": "可读性好",
+        "D": "开源"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "1-03",
+      "chapter": 1,
+      "text": "Python 程序文件的扩展名是（ ）。",
+      "options": {
+        "A": ".python",
+        "B": ".pyt",
+        "C": ".pt",
+        "D": ".py"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "1-04",
+      "chapter": 1,
+      "text": "以下叙述中正确的是（ ）。",
+      "options": {
+        "A": "Python 3.x 与 Python 2.x 兼容",
+        "B": "Python 语句只能以程序方式执行",
+        "C": "Python 是解释型语言",
+        "D": "Python 语言出现得晚，具有其他高级语言的一切优点"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "1-05",
+      "chapter": 1,
+      "text": "下列选项中合法的标识符是（ ）。",
+      "options": {
+        "A": "_7a_b",
+        "B": "break",
+        "C": "_a$b",
+        "D": "7ab"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "1-06",
+      "chapter": 1,
+      "text": "下列标识符中合法的是（ ）。",
+      "options": {
+        "A": "i'm",
+        "B": "_",
+        "C": "3Q",
+        "D": "for"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "1-07",
+      "chapter": 1,
+      "text": "Python 不支持的数据类型有（ ）。",
+      "options": {
+        "A": "char",
+        "B": "int",
+        "C": "float",
+        "D": "list"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "1-08",
+      "chapter": 1,
+      "text": "关于 Python 中的复数，下列说法错误的是（ ）。",
+      "options": {
+        "A": "表示复数的语法形式是 a+bj",
+        "B": "实部和虚部都必须是浮点数",
+        "C": "虚部必须加后缀 j，且必须是小写",
+        "D": "函数 abs() 可以求复数的模"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "1-09",
+      "chapter": 1,
+      "text": "函数 type(1+0xf*3.14) 的返回结果是（ ）。",
+      "options": {
+        "A": "<class 'int'>",
+        "B": "<class 'long'>",
+        "C": "<class 'str'>",
+        "D": "<class 'float'>"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "1-10",
+      "chapter": 1,
+      "text": "字符串 s='a\\nb\\tc'，则 len(s) 的值是（ ）。",
+      "options": {
+        "A": "7",
+        "B": "6",
+        "C": "5",
+        "D": "4"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "1-11",
+      "chapter": 1,
+      "text": "Python 语句 print(0xA+0xB) 的输出结果是（ ）。",
+      "options": {
+        "A": "0xA+0xB",
+        "B": "A+B",
+        "C": "0xA0xB",
+        "D": "21"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "1-12",
+      "chapter": 1,
+      "text": "下列属于 math 库中的数学函数的是（ ）。",
+      "options": {
+        "A": "time()",
+        "B": "round()",
+        "C": "sqrt()",
+        "D": "random()"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "1-13",
+      "chapter": 1,
+      "text": "Python 表达式中，可以使用（ ）控制运算的优先顺序。",
+      "options": {
+        "A": "圆括号 ()",
+        "B": "方括号 []",
+        "C": "大括号 {}",
+        "D": "尖括号 <>"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "1-14",
+      "chapter": 1,
+      "text": "下列表达式中，值不是 1 的是（ ）。",
+      "options": {
+        "A": "4//3",
+        "B": "15 % 2",
+        "C": "1^0",
+        "D": "~1"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "1-15",
+      "chapter": 1,
+      "text": "Python 语句 print(r\"\\nGood\") 的运行结果是（ ）。",
+      "options": {
+        "A": "新行和字符串 Good",
+        "B": "r\"\\nGood\"",
+        "C": "\\nGood",
+        "D": "字符 r、新行和字符串 Good"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "1-16",
+      "chapter": 1,
+      "text": "语句 eval('2+4/5') 执行后的输出结果是（ ）。",
+      "options": {
+        "A": "2.8",
+        "B": "2",
+        "C": "2+4/5",
+        "D": "'2+4/5'"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "1-17",
+      "chapter": 1,
+      "text": "整型变量 x 中存放了一个两位数，要将这个两位数的个位数字和十位数字交换位置，例如 13 变成 31，正确的 Python 表达式是（ ）。",
+      "options": {
+        "A": "(x%10)*10+x//10",
+        "B": "(x%10)//10+x//10",
+        "C": "(x/10)%10+x//10",
+        "D": "(x%10)*10+x%10"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "1-18",
+      "chapter": 1,
+      "text": "与数学表达式 c·d/(2ab) 对应的 Python 表达式中，不正确的是（ ）。",
+      "options": {
+        "A": "c*d/(2*a*b)",
+        "B": "c/2*d/a/b",
+        "C": "c*d/2*a*b",
+        "D": "c*d/2/a/b"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "2-01",
+      "chapter": 2,
+      "text": "流程图中表示判断框的是（ ）。",
+      "options": {
+        "A": "矩形框",
+        "B": "菱形框",
+        "C": "平行四边形框",
+        "D": "椭圆形框"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "2-02",
+      "chapter": 2,
+      "text": "下面不属于程序的基本控制结构的是（ ）。",
+      "options": {
+        "A": "顺序结构",
+        "B": "选择结构",
+        "C": "循环结构",
+        "D": "输入输出结构"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "2-03",
+      "chapter": 2,
+      "text": "以下关于 Python 语句的叙述中，正确的是（ ）。",
+      "options": {
+        "A": "同一层次的 Python 语句必须对齐",
+        "B": "Python 语句可以从一行的任意一列开始",
+        "C": "在执行 Python 语句时，可发现注释中的拼写错误",
+        "D": "Python 程序的每行只能写一条语句"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "2-04",
+      "chapter": 2,
+      "text": "下列语句中，在 Python 中非法的是（ ）。",
+      "options": {
+        "A": "x=y=z=1",
+        "B": "x,y=y,x",
+        "C": "x=(y=z+1)",
+        "D": "x+=y"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "2-05",
+      "chapter": 2,
+      "text": "已知 x=2，语句 x*=x+1 执行后，x 的值是（ ）。",
+      "options": {
+        "A": "2",
+        "B": "3",
+        "C": "5",
+        "D": "6"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "2-06",
+      "chapter": 2,
+      "text": "在 Python 中，正确的赋值语句为（ ）。",
+      "options": {
+        "A": "x+y=10",
+        "B": "x=2y",
+        "C": "x=y=30",
+        "D": "3y=x+1"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "2-07",
+      "chapter": 2,
+      "text": "为了给整型变量 x、y、z 赋初值 10，下面正确的 Python 赋值语句是（ ）。",
+      "options": {
+        "A": "xyz=10",
+        "B": "x=10 y=10 z=10",
+        "C": "x=y=z=10",
+        "D": "x=10,y=10,z=10"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "2-08",
+      "chapter": 2,
+      "text": "语句 x=input() 执行时，如果从键盘输入 12 并按回车键，则 x 的值是（ ）。",
+      "options": {
+        "A": "12",
+        "B": "12.0",
+        "C": "1e2",
+        "D": "'12'"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "2-09",
+      "chapter": 2,
+      "text": "语句 x,y=eval(input()) 执行时，输入数据格式错误的是（ ）。",
+      "options": {
+        "A": "3 4",
+        "B": "(3,4)",
+        "C": "3,4",
+        "D": "[3,4]"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "2-10",
+      "chapter": 2,
+      "text": "执行语句 print('x=${:7.2f}'.format(123.5678)) 后，输出结果是（ ）。选项中的 □ 代表空格。",
+      "options": {
+        "A": "x=□123.56",
+        "B": "$□123.57",
+        "C": "x=$□123.57",
+        "D": "x=$□123.56"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "2-11",
+      "chapter": 2,
+      "text": "print('{:7.2f}{:2d}'.format(101/7,101%8)) 的运行结果是（ ）。选项中的 □ 代表空格。",
+      "options": {
+        "A": "{:7.2f}{:2d}",
+        "B": "□□14.43 □5",
+        "C": "□14.43□□5",
+        "D": "□□101/7 □101%8"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "2-12",
+      "chapter": 2,
+      "text": "下列程序的运行结果是（ ）。\n\nx=y=10\nx,y,z=6,x+1,x+2\nprint(x,y,z)",
+      "options": {
+        "A": "10 10 6",
+        "B": "6 10 10",
+        "C": "6 7 8",
+        "D": "6 11 12"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "3-01",
+      "chapter": 3,
+      "text": "以下不合法的表达式是（ ）。",
+      "options": {
+        "A": "x in [1,2,3,4,5]",
+        "B": "x-6>5",
+        "C": "e>5 and 4==f",
+        "D": "3=a"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "3-02",
+      "chapter": 3,
+      "text": "将数学式 2<x≤10 表示成正确的 Python 表达式为（ ）。",
+      "options": {
+        "A": "2<x<=10",
+        "B": "2<x and x<=10",
+        "C": "2<x && x<=10",
+        "D": "x>2 or x<=10"
+      },
+      "answer": null,
+      "source_answer": "B",
+      "note": "原资料标注 B，但 A（Python 支持的链式比较）和 B 都是合法且等价的写法。本题存在两个正确选项，不计入成绩。"
+    },
+    {
+      "id": "3-03",
+      "chapter": 3,
+      "text": "与关系表达式 x==0 等价的表达式是（ ）。",
+      "options": {
+        "A": "x=0",
+        "B": "not x",
+        "C": "x",
+        "D": "x!=1"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "3-04",
+      "chapter": 3,
+      "text": "下列表达式的值为 True 的是（ ）。",
+      "options": {
+        "A": "2!=5 or 0",
+        "B": "3>2>2",
+        "C": "5+4j>2-3j",
+        "D": "1 and 5==0"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "3-05",
+      "chapter": 3,
+      "text": "下面 if 语句统计“成绩（mark）优秀的男生以及不及格的男生”的人数，正确的语句为（ ）。",
+      "options": {
+        "A": "if gender==\"男\" and mark<60 or mark>=90: n+=1",
+        "B": "if gender==\"男\" and mark<60 and mark>=90: n+=1",
+        "C": "if gender==\"男\" and (mark<60 or mark>=90): n+=1",
+        "D": "if gender==\"男\" or mark<60 or mark>=90: n+=1"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "3-06",
+      "chapter": 3,
+      "text": "以下 if 语句语法正确的是（ ）。",
+      "options": {
+        "A": "if a>0:x=20\\nelse:x=200",
+        "B": "if a>0:x=20\\nelse:\\n    x=200",
+        "C": "if a>0:\\n    x=20\\nelse:x=200",
+        "D": "if a>0\\n    x=20\\nelse\\n    x=200"
+      },
+      "answer": null,
+      "source_answer": "D",
+      "note": "原资料标注 D，但 D 中 if 和 else 后都缺少冒号；A、B、C 按 Python 语法均成立。本题原答案标注有误，不计入成绩。"
+    },
+    {
+      "id": "3-07",
+      "chapter": 3,
+      "text": "在 Python 中，实现多分支选择结构的较好方法是（ ）。",
+      "options": {
+        "A": "if",
+        "B": "if-else",
+        "C": "if-elif-else",
+        "D": "if 嵌套"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "3-08",
+      "chapter": 3,
+      "text": "下列语句执行后的输出是（ ）。\n\nif 2:\n    print(5)\nelse:\n    print(6)",
+      "options": {
+        "A": "0",
+        "B": "2",
+        "C": "5",
+        "D": "6"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "3-09",
+      "chapter": 3,
+      "text": "下面程序段求 x 和 y 中的较大数，不正确的是（ ）。",
+      "options": {
+        "A": "maxNum=x if x>y else y",
+        "B": "if x>y: maxNum=x\\nelse: maxNum=y",
+        "C": "maxNum=y\\nif x>y: maxNum=x",
+        "D": "if y>=x: maxNum=y\\nmaxNum=x"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "3-10",
+      "chapter": 3,
+      "text": "下列 Python 程序的运行结果是（ ）。\n\nx=0\ny=True\nprint(x>y and 'A'<'B')",
+      "options": {
+        "A": "True",
+        "B": "False",
+        "C": "true",
+        "D": "false"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "4-01",
+      "chapter": 4,
+      "text": "关于 while 循环和 for 循环的区别，下列叙述中正确的是（ ）。",
+      "options": {
+        "A": "while 语句的循环体至少无条件执行一次，for 语句的循环体有可能一次都不执行",
+        "B": "while 语句只能用于循环次数未知的循环，for 语句只能用于循环次数已知的循环",
+        "C": "在很多情况下，while 语句和 for 语句可以等价使用",
+        "D": "while 语句只能用于可迭代变量，for 语句可以用任意表达式表示条件"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "4-02",
+      "chapter": 4,
+      "text": "设有程序段：\n\nk=10\nwhile k:\n    k=k-1\n    print(k)\n\n则下面描述中正确的是（ ）。",
+      "options": {
+        "A": "while 循环执行 10 次",
+        "B": "循环是无限循环",
+        "C": "循环体语句一次也不执行",
+        "D": "循环体语句执行一次"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "4-03",
+      "chapter": 4,
+      "text": "以下 while 语句中的表达式 not E 等价于（ ）。\n\nwhile not E:\n    pass",
+      "options": {
+        "A": "E==0",
+        "B": "E!=1",
+        "C": "E!=0",
+        "D": "E==1"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "4-04",
+      "chapter": 4,
+      "text": "有以下程序段：\n\nn=0\np=0\nwhile p!=100 and n<3:\n    p=int(input())\n    n+=1\n\nwhile 循环结束的条件是（ ）。",
+      "options": {
+        "A": "p 的值不等于 100 并且 n 的值小于 3",
+        "B": "p 的值等于 100 并且 n 的值大于等于 3",
+        "C": "p 的值不等于 100 或者 n 的值小于 3",
+        "D": "p 的值等于 100 或者 n 的值大于等于 3"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "4-05",
+      "chapter": 4,
+      "text": "以下 for 语句中，不能完成 1～10 的累加功能的是（ ）。",
+      "options": {
+        "A": "for i in range(10,0): sum+=i",
+        "B": "for i in range(1,11): sum+=i",
+        "C": "for i in range(10,-1): sum+=i",
+        "D": "for i in (10,9,8,7,6,5,4,3,2,1): sum+=i"
+      },
+      "answer": null,
+      "source_answer": "A",
+      "note": "原资料标注 A，但 A 和 C 都没有指定负步长，range 均为空，因此两者都不能完成累加。本题有两个符合条件的选项，不计入成绩。"
+    },
+    {
+      "id": "4-06",
+      "chapter": 4,
+      "text": "对下列语句，不能符合语法要求的表达式是（ ）。\n\nfor var in ______:\n    print(var)",
+      "options": {
+        "A": "range(0,10)",
+        "B": "\"Hello\"",
+        "C": "(1,2,3)",
+        "D": "{1,2,3,4,5}"
+      },
+      "answer": null,
+      "source_answer": "D",
+      "note": "原资料标注 D，但集合 {1,2,3,4,5} 也是可迭代对象，可以用于 for 循环。A、B、C、D 均可运行，本题没有唯一错误选项，不计入成绩。"
+    },
+    {
+      "id": "4-07",
+      "chapter": 4,
+      "text": "下面 Python 循环体执行的次数与其他不同的是（ ）。",
+      "options": {
+        "A": "i=0\\nwhile i<=10:\\n    print(i)\\n    i+=1",
+        "B": "i=10\\nwhile i>0:\\n    print(i)\\n    i-=1",
+        "C": "for i in range(10):\\n    print(i)",
+        "D": "for i in range(10,0,-1):\\n    print(i)"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "4-08",
+      "chapter": 4,
+      "text": "下列 for 循环执行后，输出结果的最后一行是（ ）。\n\nfor i in range(1,3):\n    for j in range(2,5):\n        print(i*j)",
+      "options": {
+        "A": "2",
+        "B": "6",
+        "C": "8",
+        "D": "15"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "4-09",
+      "chapter": 4,
+      "text": "关于下列 for 循环，叙述正确的是（ ）。\n\nfor t in range(1,11):\n    x=int(input())\n    if x<0: continue\n    print(x)",
+      "options": {
+        "A": "当 x<0 时整个循环结束",
+        "B": "x>=0 时什么也不输出",
+        "C": "print() 函数永远也不执行",
+        "D": "最多允许输出 100 个非负整数"
+      },
+      "answer": null,
+      "source_answer": "D",
+      "note": "原资料标注 D，但 range(1,11) 最多循环 10 次，因此最多输出 10 个非负整数；按当前选项文字，四个选项都不正确。本题不计入成绩。"
+    },
+    {
+      "id": "4-10",
+      "chapter": 4,
+      "text": "下列说法中正确的是（ ）。",
+      "options": {
+        "A": "break 用在 for 语句中，而 continue 用在 while 语句中",
+        "B": "break 用在 while 语句中，而 continue 用在 for 语句中",
+        "C": "continue 能结束循环，而 break 只能结束本次循环",
+        "D": "break 能结束循环，而 continue 只能结束本次循环"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "5-01",
+      "chapter": 5,
+      "text": "访问字符串中的部分字符的操作称为（ ）。",
+      "options": {
+        "A": "分片",
+        "B": "合并",
+        "C": "索引",
+        "D": "赋值"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "5-02",
+      "chapter": 5,
+      "text": "下列关于字符串的描述错误的是（ ）。",
+      "options": {
+        "A": "字符串 s 的首字符是 s[0]",
+        "B": "在字符串中，同一个字母的大小写是等价的",
+        "C": "字符串中的字符都是以某种二进制编码的方式进行存储和处理的",
+        "D": "字符串也能进行关系比较操作"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "5-03",
+      "chapter": 5,
+      "text": "执行下列语句后的显示结果是（ ）。\n\nworld=\"world\"\nprint(\"hello\"+world)",
+      "options": {
+        "A": "helloworld",
+        "B": "\"hello\"world",
+        "C": "hello world",
+        "D": "\"hello\"+world"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "5-04",
+      "chapter": 5,
+      "text": "下列表达式中，有 3 个表达式的值相同，另一个不相同，与其他 3 个表达式不同的是（ ）。",
+      "options": {
+        "A": "\"ABC\"+\"DEF\"",
+        "B": "''.join((\"ABC\",\"DEF\"))",
+        "C": "\"ABC\"-\"DEF\"",
+        "D": "'ABCDEF'*1"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "5-05",
+      "chapter": 5,
+      "text": "设 s=\"Python Programming\"，那么 print(s[-5:]) 的结果是（ ）。",
+      "options": {
+        "A": "mming",
+        "B": "Python",
+        "C": "mmin",
+        "D": "Pytho"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "5-06",
+      "chapter": 5,
+      "text": "设 s=\"Happy New Year\"，则 s[3:8] 的值为（ ）。",
+      "options": {
+        "A": "'ppy Ne'",
+        "B": "'py Ne'",
+        "C": "'ppy N'",
+        "D": "'py New'"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "5-07",
+      "chapter": 5,
+      "text": "将字符串中全部字母转换为大写字母的字符串方法是（ ）。",
+      "options": {
+        "A": "swapcase",
+        "B": "capitalize",
+        "C": "uppercase",
+        "D": "upper"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "5-08",
+      "chapter": 5,
+      "text": "下列表达式中，能用于判断字符串 s1 是否属于字符串 s（即 s1 是否为 s 的子串）的是（ ）。\n\n① s1 in s\n② s.find(s1)>0\n③ s.index(s1)>0\n④ s.rfind(s1)\n⑤ s.rindex(s1)>0",
+      "options": {
+        "A": "①",
+        "B": "①②",
+        "C": "①②③",
+        "D": "①②③④⑤"
+      },
+      "answer": "A",
+      "source_answer": "D",
+      "note": "原资料标注 D；但按 Python 实际行为，只有 ① 能可靠判断子串关系。②③⑤ 在匹配位置为 0 时会误判，④ 在未找到时返回 -1（其布尔值仍为真）。本题库按 Python 语义以 A 判分，建议与老师核对原答案。"
+    },
+    {
+      "id": "5-09",
+      "chapter": 5,
+      "text": "re.findall('to','Tom likes to play football too.',re.I) 的值是（ ）。",
+      "options": {
+        "A": "['To', 'to', 'to']",
+        "B": "['to', 'to', 'to']",
+        "C": "['To', 'to']",
+        "D": "['to', 'to']"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "5-10",
+      "chapter": 5,
+      "text": "下列程序执行后，得到的输出结果是（ ）。\n\nimport re\np=re.compile(r'\\bb\\w*\\b')\ns=\"Boys may be able to get a better idea.\"\nprint(p.sub('**',s,1))",
+      "options": {
+        "A": "** may be able to get a better idea.",
+        "B": "Boys may be able to get a ** idea.",
+        "C": "Boys may ** able to get a better idea.",
+        "D": "Boys may ** able to get a ** idea."
+      },
+      "answer": "C"
+    },
+    {
+      "id": "6-01",
+      "chapter": 6,
+      "text": "下列 Python 数据中，其元素可以改变的是（ ）。",
+      "options": {
+        "A": "列表",
+        "B": "元组",
+        "C": "字符串",
+        "D": "数组"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "6-02",
+      "chapter": 6,
+      "text": "表达式 [2] in [1,2,3,4] 的值是（ ）。",
+      "options": {
+        "A": "Yes",
+        "B": "No",
+        "C": "True",
+        "D": "False"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "6-03",
+      "chapter": 6,
+      "text": "max((1,2,3)*2) 的值是（ ）。",
+      "options": {
+        "A": "3",
+        "B": "4",
+        "C": "5",
+        "D": "6"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "6-04",
+      "chapter": 6,
+      "text": "下列选项中，与 s[0:-1] 表示的含义相同的是（ ）。",
+      "options": {
+        "A": "s[-1]",
+        "B": "s[:]",
+        "C": "s[:len(s)-1]",
+        "D": "s[0:len(s)]"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "6-05",
+      "chapter": 6,
+      "text": "对于列表 L=[1,2,'Python',[1,2,3,4,5]]，L[-3] 的值是（ ）。",
+      "options": {
+        "A": "1",
+        "B": "2",
+        "C": "'Python'",
+        "D": "[1,2,3,4,5]"
+      },
+      "answer": "B"
+    },
+    {
+      "id": "6-06",
+      "chapter": 6,
+      "text": "L.reverse() 和 L[-1:-1-len(L):-1] 的主要区别是（ ）。",
+      "options": {
+        "A": "两者都将列表的所有元素反转排列，没有区别",
+        "B": "两者都不会改变列表 L 原来内容",
+        "C": "L.reverse() 不会改变列表 L 的内容，而切片会改变列表 L 原来内容",
+        "D": "L.reverse() 会改变列表 L 的内容，而切片产生一个新列表，不会改变列表 L 原来内容"
+      },
+      "answer": "D"
+    },
+    {
+      "id": "6-07",
+      "chapter": 6,
+      "text": "tuple(range(2,10,2)) 的返回结果是（ ）。",
+      "options": {
+        "A": "[2, 4, 6, 8]",
+        "B": "[2, 4, 6, 8, 10]",
+        "C": "(2, 4, 6, 8)",
+        "D": "(2, 4, 6, 8, 10)"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "6-08",
+      "chapter": 6,
+      "text": "下列程序执行后，p 的值是（ ）。\n\na=[[1,2,3],[4,5,6],[7,8,9]]\np=1\nfor i in range(len(a)):\n    p*=a[i][i]",
+      "options": {
+        "A": "45",
+        "B": "15",
+        "C": "6",
+        "D": "28"
+      },
+      "answer": "A"
+    },
+    {
+      "id": "6-09",
+      "chapter": 6,
+      "text": "下列 Python 程序的运行结果是（ ）。\n\ns=[1,2,3,4]\ns.append([5,6])\nprint(len(s))",
+      "options": {
+        "A": "2",
+        "B": "4",
+        "C": "5",
+        "D": "6"
+      },
+      "answer": "C"
+    },
+    {
+      "id": "6-10",
+      "chapter": 6,
+      "text": "下列 Python 程序执行后，输出结果是（ ）。\n\ns1=[4,5,6]\ns2=s1\ns1[1]=0\nprint(s2)",
+      "options": {
+        "A": "[4, 5, 6]",
+        "B": "[4, 0, 6]",
+        "C": "[0, 5, 6]",
+        "D": "[4, 5, 0]"
+      },
+      "answer": "B"
+    }
+  ]
+}

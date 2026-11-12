@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#101827">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="Python刷题">
+  <meta name="description" content="Python程序设计六章选择题练习，共70题，支持章节练习、错题本和离线使用。">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+  <link rel="icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>Python 选择题训练</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div class="brand-mark">Py</div>
+      <div class="brand-copy"><div class="brand-title">Python 选择题训练</div><div class="brand-subtitle">PYTHON PROGRAMMING · QUIZ</div></div>
+      <button class="icon-button" id="helpBtn" aria-label="使用帮助" title="使用帮助">?</button>
+    </header>
+
+    <main id="homeView" class="view active">
+      <section class="hero-card">
+        <div class="eyebrow">YOUR DAILY PRACTICE</div>
+        <h1>把知识点，<br><span>练成条件反射。</span></h1>
+        <p>六份课堂习题 · 70 道选择题<br>随时随地，利用碎片时间巩固 Python。</p>
+        <div class="hero-bottom"><span class="hero-chip"><i></i> 支持离线练习</span><span class="hero-count">70 <small>QUESTIONS</small></span></div>
+      </section>
+
+      <section class="stats-grid" aria-label="学习统计">
+        <div class="stat-card"><div class="stat-label">累计答题</div><div class="stat-value" id="statAnswered">0</div><div class="stat-foot">道题目</div></div>
+        <div class="stat-card"><div class="stat-label">累计正确</div><div class="stat-value" id="statCorrect">0</div><div class="stat-foot">道题目</div></div>
+        <div class="stat-card"><div class="stat-label">当前正确率</div><div class="stat-value" id="statAccuracy">—</div><div class="stat-foot">已作答题目</div></div>
+      </section>
+
+      <section class="section-block">
+        <div class="section-heading"><div><div class="section-kicker">START HERE</div><h2>开始练习</h2></div><span class="section-note">选择一种模式</span></div>
+        <div class="mode-grid">
+          <button class="mode-card primary-mode" id="allBtn"><span class="mode-icon">✦</span><span class="mode-title">全部题目</span><span class="mode-desc">70 道题随机练习</span><span class="mode-arrow">↗</span></button>
+          <button class="mode-card" id="wrongBtn"><span class="mode-icon wrong-icon">↻</span><span class="mode-title">错题复习</span><span class="mode-desc"><b id="wrongCount">0</b> 道待巩固</span><span class="mode-arrow">↗</span></button>
+        </div>
+      </section>
+
+      <section class="section-block chapters-block">
+        <div class="section-heading"><div><div class="section-kicker">BY CHAPTER</div><h2>章节练习</h2></div><span class="section-note">按知识点巩固</span></div>
+        <div id="chapterList" class="chapter-list"></div>
+      </section>
+
+      <section class="resume-card hidden" id="resumeCard">
+        <div class="resume-copy"><div class="section-kicker">IN PROGRESS</div><strong>继续上次练习</strong><span id="resumeMeta">上次练习进度已保存</span></div>
+        <button id="resumeBtn" class="resume-button">继续 <span>→</span></button>
+      </section>
+      <footer class="home-footer">题目依据你提供的《习题1—习题6》整理<br>部分原题存在答案疑点，已在答题时标注</footer>
+    </main>
+
+    <main id="quizView" class="view">
+      <div class="quiz-nav"><button class="back-button" id="backHome">‹ <span>题库首页</span></button><span class="quiz-mode-label" id="quizModeLabel">全部题目</span></div>
+      <div class="progress-wrap"><div class="progress-meta"><span id="progressText">第 1 / 70 题</span><span id="progressPercent">1%</span></div><div class="progress-track"><div id="progressBar" class="progress-fill"></div></div></div>
+      <section class="question-card">
+        <div class="question-meta"><span class="chapter-pill" id="questionChapter">习题 1</span><span class="question-number" id="questionNumber">QUESTION 01</span></div>
+        <div class="question-text" id="questionText"></div>
+        <div class="options-list" id="optionsList"></div>
+        <div class="feedback hidden" id="feedback" aria-live="polite"></div>
+      </section>
+      <div class="quiz-actions"><button class="text-action" id="quitBtn">退出本次练习</button><button class="next-button" id="nextBtn" disabled>确认答案</button></div>
+      <div class="quiz-bottom-hint">答题记录会自动保存在这台设备上</div>
+    </main>
+
+    <main id="resultView" class="view">
+      <div class="result-top"><button class="back-button" id="resultHome">‹ <span>返回首页</span></button><span class="quiz-mode-label">PRACTICE REPORT</span></div>
+      <section class="result-card">
+        <div class="result-icon" id="resultIcon">✓</div>
+        <div class="section-kicker">PRACTICE COMPLETED</div>
+        <h1 id="resultTitle">练习完成</h1>
+        <p id="resultSubtitle">每一次练习，都是一次进步。</p>
+        <div class="score-ring" id="scoreRing"><div><strong id="resultAccuracy">0%</strong><span>正确率</span></div></div>
+        <div class="result-stats"><div><strong id="resultCorrect">0</strong><span>答对</span></div><div><strong id="resultWrong">0</strong><span>答错</span></div><div><strong id="resultUnscored">0</strong><span>争议题</span></div></div>
+      </section>
+      <section class="result-actions"><button id="reviewWrongBtn" class="result-secondary">复习本次错题</button><button id="againBtn" class="result-primary">再练一次</button></section>
+      <div id="resultNotes" class="result-notes"></div>
+    </main>
+
+    <div id="helpModal" class="modal hidden" role="dialog" aria-modal="true" aria-labelledby="helpTitle">
+      <div class="modal-backdrop" id="modalBackdrop"></div>
+      <div class="modal-sheet"><div class="sheet-handle"></div><div class="modal-heading"><div><div class="section-kicker">QUICK GUIDE</div><h2 id="helpTitle">如何添加到 iPhone？</h2></div><button class="close-modal" id="closeHelp">×</button></div>
+        <ol class="guide-list"><li><span>1</span><div><strong>用 Safari 打开题库网址</strong><p>请使用 iPhone 自带的 Safari 浏览器。</p></div></li><li><span>2</span><div><strong>点击底部「分享」按钮</strong><p>就是方框向上箭头的图标。</p></div></li><li><span>3</span><div><strong>选择「添加到主屏幕」</strong><p>确认名称并点击右上角「添加」。</p></div></li></ol>
+        <div class="privacy-note">答题记录只保存在当前 iPhone 的浏览器本地，不会上传到服务器。</div>
+      </div>
+    </div>
+  </div>
+  <script src="app.js"></script>
+</body>
+</html>
