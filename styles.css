@@ -7,3 +7,14 @@
 
 /* v2: source page metadata in answer feedback */
 .feedback-origin{border-top:1px solid currentColor;margin-top:9px;padding-top:8px;opacity:.75;font-size:10px}
+
+/* V3: non-destructive record backup and update controls */
+.backup-panel{border:1px solid rgba(105,142,201,.25);background:rgba(22,37,65,.75);border-radius:18px;padding:16px;margin:18px 0 22px;color:#e9f1ff}
+.backup-head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.backup-head strong{font-size:15px;line-height:1.6}
+.backup-panel p{font-size:12px;color:#adbbd1;line-height:1.7;margin:8px 0 12px}
+.version-tag{white-space:nowrap;font-size:10px;color:#9fc0ff;border:1px solid rgba(159,192,255,.35);padding:5px 7px;border-radius:9px}
+.backup-actions{display:flex;gap:10px;flex-wrap:wrap}
+.backup-actions button{appearance:none;border:1px solid #526a91;border-radius:12px;background:#21385a;color:#f4f8ff;font-weight:700;font-size:13px;min-height:44px;padding:9px 14px;cursor:pointer;flex:1}
+.backup-actions button:focus-visible{outline:3px solid #8ab4ff;outline-offset:2px}
+@media(max-width:390px){.backup-actions button{flex-basis:100%}.version-tag{font-size:9px}}

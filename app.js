@@ -65,6 +65,72 @@ function startWrongReview(){const ids=state.wrong.filter(id=>getQ(id));startSess
 function resetWrong(){if(!state.wrong.length)return;state.wrong=[];saveState();renderHome();}
 function showHelp(){$('helpModal').classList.remove('hidden');}
 function hideHelp(){$('helpModal').classList.add('hidden');}
-function init(){state=loadState();fetch(DATA_URL).then(r=>{if(!r.ok)throw new Error('题库加载失败');return r.json();}).then(d=>{data=d;questions=d.questions;chapters=d.chapters;renderHome();$('allBtn').addEventListener('click',()=>startSession(questions.map(q=>q.id),'全部题目 · 随机练习'));$('wrongBtn').addEventListener('click',startWrongReview);$('resumeBtn').addEventListener('click',resumeSession);$('nextBtn').addEventListener('click',nextQuestion);$('backHome').addEventListener('click',()=>{if(confirm('退出本次练习？当前进度会保留，可以稍后继续。')){state.session=session;saveState();renderHome();showView('homeView');}});$('quitBtn').addEventListener('click',()=>{if(confirm('退出本次练习？当前进度会保留，可以稍后继续。')){state.session=session;saveState();renderHome();showView('homeView');}});$('resultHome').addEventListener('click',()=>{renderHome();showView('homeView');});$('againBtn').addEventListener('click',()=>startSession(questions.map(q=>q.id),'全部题目 · 随机练习'));$('reviewWrongBtn').addEventListener('click',startWrongReview);$('helpBtn').addEventListener('click',showHelp);$('closeHelp').addEventListener('click',hideHelp);$('modalBackdrop').addEventListener('click',hideHelp);});}
+function init(){state=loadState();fetch(DATA_URL).then(r=>{if(!r.ok)throw new Error('题库加载失败');return r.json();}).then(d=>{data=d;questions=d.questions;chapters=d.chapters;renderHome();$('allBtn').addEventListener('click',()=>startSession(questions.map(q=>q.id),'全部题目 · 随机练习'));$('wrongBtn').addEventListener('click',startWrongReview);$('resumeBtn').addEventListener('click',resumeSession);$('nextBtn').addEventListener('click',nextQuestion);$('backHome').addEventListener('click',()=>{if(confirm('退出本次练习？当前进度会保留，可以稍后继续。')){state.session=session;saveState();renderHome();showView('homeView');}});$('quitBtn').addEventListener('click',()=>{if(confirm('退出本次练习？当前进度会保留，可以稍后继续。')){state.session=session;saveState();renderHome();showView('homeView');}});$('resultHome').addEventListener('click',()=>{renderHome();showView('homeView');});$('againBtn').addEventListener('click',()=>startSession(questions.map(q=>q.id),'全部题目 · 随机练习'));$('reviewWrongBtn').addEventListener('click',startWrongReview);$('helpBtn').addEventListener('click',showHelp);$('closeHelp').addEventListener('click',hideHelp);$('modalBackdrop').addEventListener('click',hideHelp);setupRecoveryTools();});}
 init();
 if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+
+// v3 preserves STORAGE_KEY = pythonQuizIphone.v1 from the original iPhone app.
+// Do not remove this key during SW updates. Cache Storage and localStorage are separate.
+function setupRecoveryTools(){
+  const exportBtn = $('exportBtn');
+  const importBtn = $('importBtn');
+  const importFile = $('importFile');
+  const updateBtn = $('updateBtn');
+  exportBtn?.addEventListener('click', exportLearningData);
+  importBtn?.addEventListener('click', () => importFile.click());
+  importFile?.addEventListener('change', async () => {
+    const file=importFile.files?.[0]; if(!file) return;
+    try {
+      const info=JSON.parse(await file.text());
+      if(info.format!=='python-quiz-backup' || !info.data || typeof info.data!=='object'
+          || !Array.isArray(info.data.wrong) || typeof info.data.stats!=='object'
+          || !info.data.stats || Array.isArray(info.data.stats)) throw Error('文件不是有效的题库备份');
+      if(!confirm('确定恢复备份吗？这会覆盖当前设备的学习记录，建议先备份现有记录。'))return;
+      localStorage.setItem(STORAGE_KEY,JSON.stringify(info.data));
+      state=loadState();session=null;renderHome();showView('homeView');
+      alert('学习记录已恢复。');
+    }catch(error){alert('无法导入：'+(error.message||'文件格式有误'));}
+    finally{importFile.value='';}
+  });
+  updateBtn?.addEventListener('click', checkForUpdates);
+  if('serviceWorker' in navigator) {
+    let reloading=false;
+    navigator.serviceWorker.addEventListener('controllerchange',()=>{
+      if(reloading)return;
+      reloading=true;
+      window.location.reload();
+    });
+  }
+}
+async function exportLearningData(){
+  try {
+    // Read the exact raw stored data, without mutating it.
+    const original=localStorage.getItem(STORAGE_KEY);
+    const saved=original ? JSON.parse(original) : defaultState();
+    const backup={format:'python-quiz-backup',version:1,source:'iPhone',exportedAt:new Date().toISOString(),data:saved};
+    const json=JSON.stringify(backup,null,2);
+    const name='python-quiz-progress-'+new Date().toISOString().slice(0,10)+'.json';
+    const file=new File([json],name,{type:'application/json'});
+    if(navigator.canShare?.({files:[file]})){
+      try{await navigator.share({files:[file],title:'Python Quiz 学习记录备份'});return;}
+      catch(e){if(e?.name==='AbortError')return;}
+    }
+    const url=URL.createObjectURL(file);
+    const link=document.createElement('a'); link.href=url;link.download=name;
+    document.body.appendChild(link);link.click();link.remove();
+    setTimeout(()=>URL.revokeObjectURL(url),10000);
+    alert('已尝试导出学习记录，请在 iPhone「文件」App 中确认保存的 JSON 文件。');
+  }catch(e){alert('备份失败：'+(e.message||'未知错误'));}
+}
+async function checkForUpdates(){
+  if(!('serviceWorker' in navigator)){
+    alert('当前浏览器不支持离线更新。');return;
+  }
+  try{
+    const reg=await navigator.serviceWorker.getRegistration();
+    if(!reg){alert('未找到离线服务，联网重新打开网页后再试。');return;}
+    await reg.update();
+    if(reg.waiting)reg.waiting.postMessage({type:'ACTIVATE_UPDATE'});
+    alert('已请求检查更新。若发现新版本，请退出 App 并再次打开。原有答题记录不会被主动删除。');
+  }catch(e){alert('更新检查失败，请检查网络。'+(e.message||''));}
+}

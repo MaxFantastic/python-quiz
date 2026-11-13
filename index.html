@@ -19,6 +19,7 @@
     <header class="topbar">
       <div class="brand-mark">Py</div>
       <div class="brand-copy"><div class="brand-title">Python 选择题训练</div><div class="brand-subtitle">PYTHON PROGRAMMING · QUIZ</div></div>
+      <button class="icon-button" id="updateBtn" aria-label="检查更新" title="检查更新">↻</button>
       <button class="icon-button" id="helpBtn" aria-label="使用帮助" title="使用帮助">?</button>
     </header>
 
@@ -34,6 +35,13 @@
         <div class="stat-card"><div class="stat-label">累计答题</div><div class="stat-value" id="statAnswered">0</div><div class="stat-foot">道题目</div></div>
         <div class="stat-card"><div class="stat-label">累计正确</div><div class="stat-value" id="statCorrect">0</div><div class="stat-foot">道题目</div></div>
         <div class="stat-card"><div class="stat-label">当前正确率</div><div class="stat-value" id="statAccuracy">—</div><div class="stat-foot">已作答题目</div></div>
+      </section>
+
+      <section class="backup-panel" aria-label="学习记录备份">
+        <div class="backup-head"><div><div class="section-kicker">YOUR DATA</div><strong>学习记录保存在本机</strong></div><span class="version-tag">V3 · SAFE UPDATE</span></div>
+        <p>更新不会主动清空错题本；建议将记录导出到「文件」App 备份。</p>
+        <div class="backup-actions"><button id="exportBtn" type="button">↥ 备份学习记录</button><button id="importBtn" type="button">↧ 恢复备份</button></div>
+        <input id="importFile" type="file" accept=".json,application/json" class="hidden" aria-label="选择学习记录备份文件">
       </section>
 
       <section class="section-block">
