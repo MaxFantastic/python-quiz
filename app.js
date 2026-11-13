@@ -1,5 +1,5 @@
-const APP_VERSION = '7.0.1';
-const BUILD_ID = '2026-11-13.5';
+const APP_VERSION = '7.0.2';
+const BUILD_ID = '2026-11-13.6';
 const DATA_URL = './questions.json';
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/MaxFantastic/python-quiz/main';
 const STORAGE_KEY = 'pythonQuizIphone.v1'; // 永远保持不变：继承旧版本地学习记录
@@ -123,6 +123,7 @@ function setupTabs(){
   document.querySelectorAll('.tab-button').forEach(button=>button.addEventListener('click',()=>showView(button.dataset.view)));
 }
 function setupRecoveryTools(){
+  $('layoutDiagnosticBtn')?.addEventListener('click',showLayoutDiagnostics);
   $('exportBtn')?.addEventListener('click',exportLearningData);
   $('importBtn')?.addEventListener('click',()=>$('importFile').click());
   $('importFile')?.addEventListener('change',async()=>{
@@ -142,6 +143,43 @@ function setupRecoveryTools(){
     navigator.serviceWorker.addEventListener('controllerchange',()=>{if(reloading)return;reloading=true;setGlobalStatus('更新已激活，正在重载');location.reload();});
   }
 }
+function showLayoutDiagnostics(){
+  const root=document.documentElement;
+  const shell=document.getElementById('appShell');
+  const nav=document.getElementById('bottomTabs');
+  const vv=window.visualViewport;
+  const shellRect=shell?.getBoundingClientRect();
+  const navRect=nav?.getBoundingClientRect();
+  const probe=document.createElement('div');
+  probe.setAttribute('aria-hidden','true');
+  probe.style.cssText='position:fixed;left:-9999px;top:0;visibility:hidden;pointer-events:none;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);';
+  document.body.appendChild(probe);
+  const probeStyle=getComputedStyle(probe);
+  const safeTop=parseFloat(probeStyle.paddingTop)||0;
+  const safeBottom=parseFloat(probeStyle.paddingBottom)||0;
+  probe.remove();
+  const n=v=>Number.isFinite(v)?Math.round(v*10)/10:'—';
+  const report=[
+    'Python Quiz iOS 布局诊断（单位：CSS px）',
+    `显示模式：${root.dataset.displayMode||'未设置'}`,
+    `navigator.standalone：${String(window.navigator.standalone)}`,
+    `display-mode standalone：${String(!!window.matchMedia?.('(display-mode: standalone)').matches)}`,
+    `screen：${screen.width} × ${screen.height}`,
+    `window.inner：${window.innerWidth} × ${window.innerHeight}`,
+    `documentElement.clientHeight：${root.clientHeight}`,
+    `visualViewport：${vv?`${n(vv.width)} × ${n(vv.height)}，offsetTop ${n(vv.offsetTop)}，pageTop ${n(vv.pageTop)}`:'不可用'}`,
+    `devicePixelRatio：${window.devicePixelRatio}`,
+    `safe-area top/bottom：${n(safeTop)} / ${n(safeBottom)}`,
+    `app-shell top/bottom/height：${shellRect?`${n(shellRect.top)} / ${n(shellRect.bottom)} / ${n(shellRect.height)}`:'未找到'}`,
+    `bottom-tabs top/bottom/height：${navRect?`${n(navRect.top)} / ${n(navRect.bottom)} / ${n(navRect.height)}`:'未找到'}`,
+    `innerHeight - 导航栏 bottom：${navRect?n(window.innerHeight-navRect.bottom):'—'}`,
+    `screen.height - 导航栏 bottom：${navRect?n(screen.height-navRect.bottom):'—'}`,
+    '',
+    '请把这段诊断信息截图发回；它不会读取或修改学习记录。'
+  ];
+  alert(report.join('\n'));
+}
+
 async function exportLearningData(){
   try{
     const original=localStorage.getItem(STORAGE_KEY),saved=original?JSON.parse(original):defaultState();

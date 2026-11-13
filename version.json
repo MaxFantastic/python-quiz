@@ -1,8 +1,8 @@
 {
-  "version": "7.0.1",
-  "build": "2026-11-13.5",
+  "version": "7.0.2",
+  "build": "2026-11-13.6",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "修复 iOS 主屏幕 App 的底部空白：standalone 模式不再使用 window.innerHeight 计算像素高度，而使用 fixed inset 0 填满完整 WebView，并仅通过 safe-area-inset-bottom 为 Home Indicator 留出安全区。更新检测改为同时读取 GitHub Pages 与 raw GitHub 版本文件，采用较高语义版本；远端版本低于本机时忽略，避免 V7 被误报为 V6 新版。保留 pythonQuizIphone.v1。"
+  "notes": "诊断版本：在“我的”页面增加 iOS 视口与底部导航坐标诊断。读取 display-mode、navigator.standalone、screen.height、innerHeight、visualViewport、safe-area inset、app-shell 与 bottom-tabs 的实际坐标；不修改题目、不清理或覆盖 pythonQuizIphone.v1。暂不猜测新的底部定位参数，先用实机数据确定 Safari/PWA 的视口边界。"
 }
