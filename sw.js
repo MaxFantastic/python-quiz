@@ -1,5 +1,5 @@
 // Python Quiz V7 service worker. Cache updates never touch localStorage.
-const VERSION = 'v7.0.2-20261113-layout-diagnostic';
+const VERSION = 'v7.0.3-20261113-full-bleed-bottom-dock';
 const CACHE = 'python-quiz-iphone-' + VERSION;
 const BASE = new URL(self.registration.scope);
 const CORE = ['index.html','app.js','styles.css','questions.json','version.json','manifest.webmanifest'];

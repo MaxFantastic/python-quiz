@@ -67,3 +67,42 @@ html[data-display-mode=standalone] .bottom-tabs{margin-bottom:0;flex:0 0 57px;}
 
 /* V7.0.2 diagnostic-only control: no changes to viewport geometry yet. */
 .layout-diagnostic-btn{appearance:none;width:100%;min-height:38px;margin-top:8px;padding:8px 10px;border:1px solid rgba(117,168,255,.45);border-radius:10px;background:rgba(255,255,255,.08);color:#dbe8ff;font-size:12px;font-weight:750;cursor:pointer}
+
+
+/* V7.0.3: standalone iOS bottom dock fills the Home Indicator safe area.
+   The white dock background reaches the physical bottom edge; tab controls remain
+   above the Home Indicator inside the safe-area padding. Safari keeps its own layout. */
+html[data-display-mode="standalone"] .app-shell{
+  padding-bottom:0 !important;
+}
+html[data-display-mode="standalone"] .bottom-tabs{
+  box-sizing:border-box;
+  width:calc(100% + 28px);
+  max-width:588px;
+  height:calc(57px + env(safe-area-inset-bottom,0px));
+  min-height:calc(57px + env(safe-area-inset-bottom,0px));
+  flex:0 0 calc(57px + env(safe-area-inset-bottom,0px));
+  margin:4px -14px 0;
+  padding:4px 19px calc(env(safe-area-inset-bottom,0px) + 4px);
+  border:0;
+  border-top:1px solid #e8ecf2;
+  border-radius:18px 18px 0 0;
+  background:#fff;
+  box-shadow:0 -5px 18px #1b2a4510;
+}
+html[data-display-mode="standalone"] .bottom-tabs .tab-button{
+  min-height:0;
+}
+
+/* Screens without the tab bar still reserve the Home Indicator area. */
+html[data-display-mode="standalone"] .app-shell[data-screen="quizView"],
+html[data-display-mode="standalone"] .app-shell[data-screen="resultView"]{
+  padding-bottom:env(safe-area-inset-bottom,0px) !important;
+}
+@media(max-height:680px){
+  html[data-display-mode="standalone"] .bottom-tabs{
+    height:calc(52px + env(safe-area-inset-bottom,0px));
+    min-height:calc(52px + env(safe-area-inset-bottom,0px));
+    flex-basis:calc(52px + env(safe-area-inset-bottom,0px));
+  }
+}

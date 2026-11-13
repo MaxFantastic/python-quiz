@@ -1,8 +1,8 @@
 {
-  "version": "7.0.2",
-  "build": "2026-11-13.6",
+  "version": "7.0.3",
+  "build": "2026-11-13.7",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "诊断版本：在“我的”页面增加 iOS 视口与底部导航坐标诊断。读取 display-mode、navigator.standalone、screen.height、innerHeight、visualViewport、safe-area inset、app-shell 与 bottom-tabs 的实际坐标；不修改题目、不清理或覆盖 pythonQuizIphone.v1。暂不猜测新的底部定位参数，先用实机数据确定 Safari/PWA 的视口边界。"
+  "notes": "iOS standalone 底部导航重构：外层 dock 背景延伸到视口底部并覆盖 Home Indicator 安全区，按钮保持在安全区上方；Safari 模式保持原布局；保留 pythonQuizIphone.v1 学习记录。"
 }
