@@ -7,12 +7,13 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Python刷题">
-  <meta name="description" content="Python程序设计186题，六份习题与六份课件，支持章节练习、错题本和离线使用。">
+  <meta name="description" content="Python程序设计186题，支持 GitHub 在线检查更新、章节练习、错题本和离线使用。">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="icon" href="icons/icon-192.png">
   <link rel="stylesheet" href="styles.css">
   <title>Python 选择题训练</title>
+  <meta name="app-version" content="4.0.0">
 </head>
 <body>
   <div class="app-shell">
@@ -38,9 +39,13 @@
       </section>
 
       <section class="backup-panel" aria-label="学习记录备份">
-        <div class="backup-head"><div><div class="section-kicker">YOUR DATA</div><strong>学习记录保存在本机</strong></div><span class="version-tag">V3 · SAFE UPDATE</span></div>
-        <p>更新不会主动清空错题本；建议将记录导出到「文件」App 备份。</p>
+        <div class="backup-head"><div><div class="section-kicker">YOUR DATA</div><strong>学习记录保存在本机</strong></div><span class="version-tag">V4 · GITHUB UPDATE</span></div>
+        <p>学习记录保存在本机。更新程序不会主动清空错题本或答题统计，仍建议定期备份。</p>
         <div class="backup-actions"><button id="exportBtn" type="button">↥ 备份学习记录</button><button id="importBtn" type="button">↧ 恢复备份</button></div>
+        <div class="github-update-row">
+          <button id="githubUpdateBtn" type="button">☁ 从 GitHub 检查并获取更新</button>
+          <span id="updateStatus" role="status" aria-live="polite">当前版本 V4.0.0 · 联网后可检查更新</span>
+        </div>
         <input id="importFile" type="file" accept=".json,application/json" class="hidden" aria-label="选择学习记录备份文件">
       </section>
 

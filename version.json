@@ -1,0 +1,8 @@
+{
+  "version": "4.0.0",
+  "build": "2026-11-13.1",
+  "questionCount": 186,
+  "updatedAt": "2026-11-13",
+  "repository": "https://github.com/MaxFantastic/python-quiz",
+  "notes": "新增 GitHub 在线更新检查；保留原有本地学习记录；继续包含 186 道题。"
+}

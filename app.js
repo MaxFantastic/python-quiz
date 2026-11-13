@@ -1,4 +1,6 @@
 const DATA_URL = 'questions.json';
+const APP_VERSION = '4.0.0';
+const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/MaxFantastic/python-quiz/main';
 const STORAGE_KEY = 'pythonQuizIphone.v1'; // 保持不变，继承旧版学习记录
 let data, questions, chapters, state, session = null;
 const $ = id => document.getElementById(id);
@@ -67,9 +69,9 @@ function showHelp(){$('helpModal').classList.remove('hidden');}
 function hideHelp(){$('helpModal').classList.add('hidden');}
 function init(){state=loadState();fetch(DATA_URL).then(r=>{if(!r.ok)throw new Error('题库加载失败');return r.json();}).then(d=>{data=d;questions=d.questions;chapters=d.chapters;renderHome();$('allBtn').addEventListener('click',()=>startSession(questions.map(q=>q.id),'全部题目 · 随机练习'));$('wrongBtn').addEventListener('click',startWrongReview);$('resumeBtn').addEventListener('click',resumeSession);$('nextBtn').addEventListener('click',nextQuestion);$('backHome').addEventListener('click',()=>{if(confirm('退出本次练习？当前进度会保留，可以稍后继续。')){state.session=session;saveState();renderHome();showView('homeView');}});$('quitBtn').addEventListener('click',()=>{if(confirm('退出本次练习？当前进度会保留，可以稍后继续。')){state.session=session;saveState();renderHome();showView('homeView');}});$('resultHome').addEventListener('click',()=>{renderHome();showView('homeView');});$('againBtn').addEventListener('click',()=>startSession(questions.map(q=>q.id),'全部题目 · 随机练习'));$('reviewWrongBtn').addEventListener('click',startWrongReview);$('helpBtn').addEventListener('click',showHelp);$('closeHelp').addEventListener('click',hideHelp);$('modalBackdrop').addEventListener('click',hideHelp);setupRecoveryTools();});}
 init();
-if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js').catch(()=>{}));}
+if('serviceWorker' in navigator && location.protocol.startsWith('http')){window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'}).catch(()=>{}));}
 
-// v3 preserves STORAGE_KEY = pythonQuizIphone.v1 from the original iPhone app.
+// V4 preserves STORAGE_KEY = pythonQuizIphone.v1 from the original iPhone app.
 // Do not remove this key during SW updates. Cache Storage and localStorage are separate.
 function setupRecoveryTools(){
   const exportBtn = $('exportBtn');
@@ -93,6 +95,7 @@ function setupRecoveryTools(){
     finally{importFile.value='';}
   });
   updateBtn?.addEventListener('click', checkForUpdates);
+  $('githubUpdateBtn')?.addEventListener('click', checkForUpdates);
   if('serviceWorker' in navigator) {
     let reloading=false;
     navigator.serviceWorker.addEventListener('controllerchange',()=>{
@@ -122,15 +125,90 @@ async function exportLearningData(){
     alert('已尝试导出学习记录，请在 iPhone「文件」App 中确认保存的 JSON 文件。');
   }catch(e){alert('备份失败：'+(e.message||'未知错误'));}
 }
-async function checkForUpdates(){
-  if(!('serviceWorker' in navigator)){
-    alert('当前浏览器不支持离线更新。');return;
+async function fetchGitHubVersion(){
+  const candidates=[
+    `${GITHUB_RAW_BASE}/version.json?ts=${Date.now()}`,
+    `${new URL('version.json',location.href).href}?ts=${Date.now()}`
+  ];
+  let lastError;
+  for(const url of candidates){
+    try{
+      const response=await fetch(url,{cache:'no-store',mode:'cors'});
+      if(!response.ok)throw new Error(`HTTP ${response.status}`);
+      const info=await response.json();
+      if(!info || typeof info.version!=='string')throw new Error('版本信息格式不正确');
+      return info;
+    }catch(error){lastError=error;}
   }
+  throw lastError||new Error('无法连接 GitHub');
+}
+function waitForControllerChange(timeout=18000){
+  return new Promise(resolve=>{
+    let done=false;
+    const finish=value=>{if(done)return;done=true;clearTimeout(timer);navigator.serviceWorker.removeEventListener('controllerchange',onChange);resolve(value);};
+    const onChange=()=>finish(true);
+    const timer=setTimeout(()=>finish(false),timeout);
+    navigator.serviceWorker.addEventListener('controllerchange',onChange,{once:true});
+  });
+}
+async function checkForUpdates(){
+  const button=$('githubUpdateBtn');
+  const status=$('updateStatus');
+  const setStatus=(message,kind='')=>{if(status){status.textContent=message;status.className=kind;}};
+  if(button)button.disabled=true;
+  setStatus('正在连接 GitHub，检查最新版本……');
   try{
-    const reg=await navigator.serviceWorker.getRegistration();
-    if(!reg){alert('未找到离线服务，联网重新打开网页后再试。');return;}
+    const remote=await fetchGitHubVersion();
+    const remoteCount=Number(remote.questionCount||questions?.length||0);
+    const versionText=`GitHub 最新版本 V${remote.version}${remoteCount?` · ${remoteCount} 道题`:''}`;
+    setStatus(`${versionText}。正在请求 iPhone 更新离线程序……`);
+    if(!('serviceWorker' in navigator))throw new Error('当前环境不支持离线更新，请用主屏幕网页 App 打开。');
+    let reg=await navigator.serviceWorker.getRegistration();
+    if(!reg)reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});
+    const controllerChanged=waitForControllerChange(20000);
     await reg.update();
+    // V4 service worker calls skipWaiting() after all essential files are cached.
     if(reg.waiting)reg.waiting.postMessage({type:'ACTIVATE_UPDATE'});
-    alert('已请求检查更新。若发现新版本，请退出 App 并再次打开。原有答题记录不会被主动删除。');
-  }catch(e){alert('更新检查失败，请检查网络。'+(e.message||''));}
+    if(!reg.installing && !reg.waiting){
+      if(remote.version===APP_VERSION && remoteCount===questions.length){
+        setStatus(`已经是最新版本 V${APP_VERSION}（${questions.length} 道题）。`,'success');
+      }else{
+        setStatus(`GitHub 仓库为 V${remote.version}（${remoteCount} 道题），但没有检测到新的 Service Worker。请确认 GitHub Pages 已部署 sw.js。`,'error');
+      }
+      return;
+    }
+    if(reg.installing){
+      await new Promise(resolve=>{
+        const worker=reg.installing;
+        if(!worker){resolve();return;}
+        const timer=setTimeout(resolve,20000);
+        worker.addEventListener('statechange',()=>{
+          if(['installed','activated','redundant'].includes(worker.state)){clearTimeout(timer);resolve();}
+        });
+      });
+    }
+    if(reg.waiting)reg.waiting.postMessage({type:'ACTIVATE_UPDATE'});
+    const changed=await controllerChanged;
+    if(changed){
+      setStatus('更新已激活，正在重新载入……','success');
+      setTimeout(()=>location.reload(),250);
+      return;
+    }
+    // Some iOS versions do not dispatch controllerchange to an already-controlled page
+    // when the registration is unchanged. Ask the user to relaunch rather than clearing data.
+    const latestReg=await navigator.serviceWorker.getRegistration();
+    if(latestReg?.waiting){
+      latestReg.waiting.postMessage({type:'ACTIVATE_UPDATE'});
+      setStatus('已下载更新，iOS 正在等待激活。请完全关闭 App 后重新打开；不要删除 App。','success');
+    }else if(remote.version===APP_VERSION){
+      setStatus(`已经是最新版本 V${APP_VERSION}（${remoteCount} 道题）。`,'success');
+    }else{
+      setStatus(`已连接 GitHub，仓库版本为 V${remote.version}，但 iPhone 尚未切换到新版。请保持联网，稍后重开 App；不要清除数据。`,'error');
+    }
+  }catch(error){
+    setStatus(`更新检查失败：${error.message||'网络连接异常'}。请确认网络后重试。`,'error');
+    alert(`暂时无法从 GitHub 获取更新。\n\n${error.message||'请检查网络连接'}\n\n你的错题和答题记录没有被修改。`);
+  }finally{
+    if(button)button.disabled=false;
+  }
 }
