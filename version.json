@@ -1,8 +1,8 @@
 {
-  "version": "4.0.0",
-  "build": "2026-11-13.1",
+  "version": "5.0.0",
+  "build": "2026-11-13.2",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "新增 GitHub 在线更新检查；保留原有本地学习记录；继续包含 186 道题。"
+  "notes": "新增顶部版本号、单屏四标签导航、下拉检查更新与启动/恢复联网自动检查；保留 pythonQuizIphone.v1 学习记录。"
 }
