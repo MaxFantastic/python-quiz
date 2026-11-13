@@ -106,3 +106,16 @@ html[data-display-mode="standalone"] .app-shell[data-screen="resultView"]{
     flex-basis:calc(52px + env(safe-area-inset-bottom,0px));
   }
 }
+
+
+/* V7.0.4: iOS standalone WebView reports innerHeight excluding the top safe-area
+   (verified on device: screen.height 874, innerHeight 812, safe-top 62px).
+   Keep the shell top fixed, but extend its bottom by that omitted top inset so
+   the full-bleed dock reaches the physical screen edge. Safari layout is untouched. */
+html[data-display-mode="standalone"] .app-shell{
+  top:0 !important;
+  bottom:calc(0px - env(safe-area-inset-top, 0px)) !important;
+  height:auto !important;
+  min-height:0;
+  max-height:none;
+}

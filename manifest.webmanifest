@@ -1,5 +1,5 @@
 {
-  "name": "Python 选择题训练 V7.0.3",
+  "name": "Python 选择题训练 V7.0.4",
   "short_name": "Python刷题",
   "start_url": "./index.html",
   "scope": "./",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "description": "iOS 布局诊断版本；可读取屏幕视口、安全区域与底部导航实际坐标，不修改本地学习记录。"
+  "description": "iOS 独立 App 全屏安全区域延伸修复；保留本地学习记录。"
 }

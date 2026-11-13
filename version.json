@@ -1,8 +1,8 @@
 {
-  "version": "7.0.3",
-  "build": "2026-11-13.7",
+  "version": "7.0.4",
+  "build": "2026-11-13.8",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "iOS standalone 底部导航重构：外层 dock 背景延伸到视口底部并覆盖 Home Indicator 安全区，按钮保持在安全区上方；Safari 模式保持原布局；保留 pythonQuizIphone.v1 学习记录。"
+  "notes": "iOS standalone 根容器向下延伸顶部安全区高度，补齐屏幕底部 62 CSS px 空白；底部 Dock 覆盖 Home Indicator 安全区；保留 pythonQuizIphone.v1。"
 }
