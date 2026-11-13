@@ -1,5 +1,5 @@
-const APP_VERSION = '7.0.4';
-const BUILD_ID = '2026-11-13.8';
+const APP_VERSION = '7.0.5';
+const BUILD_ID = '2026-11-13.9';
 const DATA_URL = './questions.json';
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/MaxFantastic/python-quiz/main';
 const STORAGE_KEY = 'pythonQuizIphone.v1'; // 永远保持不变：继承旧版本地学习记录
@@ -20,6 +20,7 @@ function setVersionUI(){ $('appVersion').textContent='V'+APP_VERSION; }
 function showView(id){
   viewIds.forEach(v=>$(v).classList.toggle('active',v===id));
   $('appShell').dataset.screen=id;
+  document.documentElement.dataset.screen=id;
   $('bottomTabs').classList.toggle('hidden',!tabViewIds.includes(id));
   document.querySelectorAll('.tab-button').forEach(b=>b.classList.toggle('active',b.dataset.view===id));
   if(id==='profileView')renderProfile();
