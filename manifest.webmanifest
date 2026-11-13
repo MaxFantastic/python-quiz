@@ -1,5 +1,5 @@
 {
-  "name": "Python 选择题训练 V5",
+  "name": "Python 选择题训练 V6",
   "short_name": "Python刷题",
   "start_url": "./index.html",
   "scope": "./",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "description": "Python 程序设计 186 道选择题，支持单屏导航、下拉检查更新和离线练习。"
+  "description": "Python 程序设计 186 道选择题，支持单屏导航、下拉检查更新、离线练习和学习记录备份。"
 }

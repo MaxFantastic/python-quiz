@@ -1,8 +1,8 @@
 {
-  "version": "5.0.0",
-  "build": "2026-11-13.2",
+  "version": "6.0.0",
+  "build": "2026-11-13.3",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "新增顶部版本号、单屏四标签导航、下拉检查更新与启动/恢复联网自动检查；保留 pythonQuizIphone.v1 学习记录。"
+  "notes": "界面垂直布局居中优化，修复首页内容上移与大面积留白；全站文字整体放大约12%；保持 pythonQuizIphone.v1 学习记录兼容。"
 }
