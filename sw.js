@@ -1,5 +1,5 @@
-// Python Quiz V6 service worker. Cache updates never touch localStorage.
-const VERSION = 'v6-20261113-layout-font-refinement';
+// Python Quiz V7 service worker. Cache updates never touch localStorage.
+const VERSION = 'v7-20261113-ios-standalone-viewport';
 const CACHE = 'python-quiz-iphone-' + VERSION;
 const BASE = new URL(self.registration.scope);
 const CORE = ['index.html','app.js','styles.css','questions.json','version.json','manifest.webmanifest'];
@@ -27,7 +27,7 @@ self.addEventListener('activate', event => {
     const keys = await caches.keys();
     await Promise.all(keys.filter(key => key.startsWith('python-quiz-iphone-') && key !== CACHE).map(key => caches.delete(key)));
     await self.clients.claim();
-    // The current V5 page listens for controllerchange and reloads itself.
+    // The current V6 page listens for controllerchange and reloads itself.
     // Do not clear localStorage: learning records remain under pythonQuizIphone.v1.
   })());
 });

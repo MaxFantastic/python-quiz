@@ -1,5 +1,5 @@
 {
-  "name": "Python 选择题训练 V6",
+  "name": "Python 选择题训练 V7",
   "short_name": "Python刷题",
   "start_url": "./index.html",
   "scope": "./",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "description": "Python 程序设计 186 道选择题，支持单屏导航、下拉检查更新、离线练习和学习记录备份。"
+  "description": "针对 Safari 浏览器与 iPhone 主屏幕独立 App 分别测量视口；底部导航贴合安全区域，支持离线练习和自动更新。"
 }

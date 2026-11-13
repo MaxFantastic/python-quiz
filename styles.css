@@ -1,14 +1,17 @@
-:root{--bg:#f3f5f8;--ink:#172033;--muted:#7c8799;--line:#e6ebf2;--blue:#315efb;--green:#16865b;--red:#c43d4b;--navy:#101827;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
+:root{--app-viewport-top:0px;--app-viewport-height:100dvh;--bg:#f3f5f8;--ink:#172033;--muted:#7c8799;--line:#e6ebf2;--blue:#315efb;--green:#16865b;--red:#c43d4b;--navy:#101827;--safe-top:env(safe-area-inset-top,0px);--safe-bottom:env(safe-area-inset-bottom,0px)}
 *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
 html,body{width:100%;height:100%;margin:0;overflow:hidden;background:var(--bg);overscroll-behavior:none}
 body{color:var(--ink);font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","PingFang SC","Microsoft YaHei",sans-serif;touch-action:pan-y}
 button{font:inherit;cursor:pointer}
-.app-shell{position:relative;width:100%;max-width:560px;height:100vh;height:100dvh;margin:0 auto;padding:var(--safe-top) 14px calc(var(--safe-bottom) + 5px);display:flex;flex-direction:column;overflow:hidden;background:var(--bg)}
-.version-strip{height:23px;min-height:23px;display:flex;align-items:center;gap:7px;padding:0 2px;color:#8590a1;font-size:10px;letter-spacing:.8px;font-weight:750}
+/* The app frame is tied to the visible WebView, not to Safari's layout viewport. */
+.app-shell{position:fixed;top:var(--app-viewport-top,0px);left:0;right:0;width:100%;max-width:560px;height:var(--app-viewport-height,100dvh);min-height:0;margin:0 auto;padding:calc(var(--safe-top) + 8px) 14px calc(var(--safe-bottom) + 8px);display:flex;flex-direction:column;overflow:hidden;background:var(--bg);}
+html[data-display-mode="standalone"] .app-shell{top:0;height:var(--app-viewport-height,100dvh);padding-top:calc(var(--safe-top) + 8px);padding-bottom:calc(var(--safe-bottom) + 8px)}
+html[data-display-mode="browser"] .app-shell{top:var(--app-viewport-top,0px);height:var(--app-viewport-height,100dvh);padding-top:max(6px,var(--safe-top));padding-bottom:max(8px,var(--safe-bottom))}
+.version-strip{height:27px;min-height:27px;display:flex;align-items:center;gap:7px;padding:0 2px;color:#8590a1;font-size:11.5px;letter-spacing:.8px;font-weight:750}
 .version-led{width:6px;height:6px;border-radius:50%;background:#20a56c;box-shadow:0 0 0 3px #20a56c18}
 .version-product{letter-spacing:1.25px}
-.version-strip strong{font-size:11px;color:#315efb;letter-spacing:.3px}
-.version-state{margin-left:auto;font-size:10px;letter-spacing:0;font-weight:550;color:#9aa4b3;white-space:nowrap;max-width:42%;overflow:hidden;text-overflow:ellipsis}
+.version-strip strong{font-size:12.5px;color:#315efb;letter-spacing:.3px}
+.version-state{margin-left:auto;font-size:11px;letter-spacing:0;font-weight:550;color:#9aa4b3;white-space:nowrap;max-width:42%;overflow:hidden;text-overflow:ellipsis}
 .topbar{height:55px;min-height:55px;display:flex;align-items:center;gap:10px}
 .brand-mark{width:36px;height:36px;border-radius:12px;background:var(--navy);color:#fff;display:grid;place-items:center;font-weight:850;font-size:18px;letter-spacing:-1px;box-shadow:0 5px 13px #10182720}
 .brand-copy{flex:1;min-width:0}.brand-title{font-size:15.5px;font-weight:780;letter-spacing:.1px}.brand-subtitle{font-size:9px;color:#98a2b3;letter-spacing:1.2px;margin-top:3px;font-weight:700}
@@ -20,7 +23,7 @@ button{font:inherit;cursor:pointer}
 .stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:10px 0;flex:0 0 auto}.stat-card{min-width:0;background:#fff;border:1px solid #edf0f5;border-radius:13px;padding:9px 10px;display:flex;flex-direction:column;gap:5px}.stat-card span{font-size:10px;color:#8994a5;font-weight:650;white-space:nowrap}.stat-card strong{font-size:22.5px;line-height:1.05;letter-spacing:-.6px;font-weight:820;color:#1d2b42}
 .home-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;flex:0 0 auto}.mode-card{position:relative;min-width:0;min-height:94px;padding:11px 12px;border:1px solid #e8ecf2;border-radius:15px;background:#fff;color:var(--ink);text-align:left;display:flex;flex-direction:column;align-items:flex-start;justify-content:flex-start}.primary-mode{background:#eaf0ff;border-color:#dbe5ff}.mode-icon{width:24px;height:24px;border-radius:8px;background:#315efb;color:#fff;display:grid;place-items:center;font-size:17px;margin-bottom:6px}.wrong-icon{background:#fff0f0;color:#c43d4b}.mode-title{font-size:13.5px;font-weight:820}.mode-desc{font-size:10px;color:#8994a5;margin-top:3px}.mode-desc b{color:#c43d4b}.mode-arrow{position:absolute;right:11px;top:10px;color:#91a0b8;font-size:17px}
 .resume-card{flex:0 0 auto;display:flex;align-items:center;gap:10px;margin-top:10px;padding:10px 12px;background:#fff;border:1px solid #dce5ff;border-radius:14px;min-height:54px}.resume-icon{width:29px;height:29px;border-radius:9px;background:#edf2ff;color:#315efb;display:grid;place-items:center;font-size:13.5px}.resume-copy{display:flex;flex:1;min-width:0;flex-direction:column;gap:3px}.resume-copy strong{font-size:12.5px}.resume-copy span{font-size:10px;color:#8d98a9;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.resume-button{border:0;border-radius:10px;background:var(--blue);color:#fff;padding:8px 11px;font-size:11px;font-weight:750;white-space:nowrap}.home-footnote,.profile-note,.list-footnote{text-align:center;font-size:10px;color:#a1aab8;margin-top:auto;padding-top:9px;flex:0 0 auto}.online-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:#1da875;margin-right:5px;vertical-align:1px}
-.bottom-tabs{height:57px;min-height:57px;display:grid;grid-template-columns:repeat(4,1fr);align-items:stretch;background:#fff;border:1px solid #e8ecf2;border-radius:17px;margin-top:4px;padding:4px 5px calc(4px + var(--safe-bottom)*.08);box-shadow:0 5px 18px #1b2a4510}
+.bottom-tabs{height:57px;min-height:57px;flex:0 0 57px;margin-bottom:0;display:grid;grid-template-columns:repeat(4,1fr);align-items:stretch;background:#fff;border:1px solid #e8ecf2;border-radius:17px;margin-top:4px;padding:4px 5px calc(4px + var(--safe-bottom)*.08);box-shadow:0 5px 18px #1b2a4510}
 .tab-button{border:0;background:transparent;color:#98a2b1;border-radius:12px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:10px;font-weight:650}.tab-icon{font-size:20px;line-height:1.05}.tab-button.active{background:#edf2ff;color:#315efb;font-weight:800}
 .app-shell[data-screen="quizView"] .bottom-tabs,.app-shell[data-screen="resultView"] .bottom-tabs{display:none}
 .list-view{gap:11px}.page-heading{height:45px;min-height:45px;display:flex;align-items:center;justify-content:space-between;padding:0 2px}.page-heading h1{font-size:22.5px;line-height:1.1;margin:4px 0 0;letter-spacing:-.4px}.page-count{font-size:10px;color:#9aa4b3;background:#fff;border:1px solid #e9edf3;padding:6px 9px;border-radius:20px}.chapter-list{display:grid;grid-template-columns:1fr;grid-auto-rows:minmax(48px,1fr);gap:7px;min-height:0;flex:1}.chapter-item{display:flex;align-items:center;gap:10px;width:100%;min-height:0;padding:7px 10px;border:1px solid #e9edf3;border-radius:13px;background:#fff;text-align:left;color:var(--ink);transition:transform .12s}.chapter-item:active,.mode-card:active,.option-button:active{transform:scale(.987)}.chapter-index{width:32px;height:32px;flex:0 0 32px;border-radius:10px;display:grid;place-items:center;background:#f0f3f9;color:#53627b;font-size:11px;font-weight:850}.chapter-copy{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}.chapter-name{font-size:12.5px;font-weight:780;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.chapter-sub{font-size:9px;color:#9aa4b3}.chapter-count{font-size:10px;color:#929eaf;white-space:nowrap}.chapter-arrow{color:#a8b1bf;font-size:17px;margin-left:1px}.list-footnote{padding-top:0;margin-top:0}
@@ -40,3 +43,17 @@ button{font:inherit;cursor:pointer}
 .profile-view .profile-note{margin-top:0;padding-top:0}
 /* Keep small screens readable without allowing the home dashboard to overflow. */
 @media(max-height:740px){#homeView.view.active{gap:clamp(8px,1.4vh,13px)}.home-hero{min-height:108px}.mode-card{min-height:86px}}
+
+
+/* V7: distinguish Safari's browser viewport from the iOS Home Screen app viewport.
+   In Safari, JS measures visualViewport so the dock stays above the bottom browser UI.
+   In standalone mode, JS uses the full app WebView height; safe-area padding protects
+   the status bar and home indicator. The flex column then pins the tab bar to the bottom. */
+html,body{position:relative;width:100%;height:100%;min-height:100%;overflow:hidden}
+.app-shell{isolation:isolate}
+.view{flex:1 1 auto;min-height:0}
+.bottom-tabs{flex-shrink:0;align-self:stretch}
+@media (display-mode:standalone){.app-shell{padding-top:calc(env(safe-area-inset-top,0px) + 8px);padding-bottom:calc(env(safe-area-inset-bottom,0px) + 8px)}}
+@media (display-mode:browser){.app-shell{padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}}
+@media(max-height:740px){.version-strip{height:25px;min-height:25px}.topbar{height:51px;min-height:51px}}
+@media(max-height:680px){.bottom-tabs{height:52px;min-height:52px;flex-basis:52px}}

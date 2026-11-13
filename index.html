@@ -3,12 +3,40 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <script>
+    (function () {
+      const root = document.documentElement;
+      const standalone = () => window.navigator.standalone === true ||
+        (window.matchMedia && window.matchMedia('(display-mode: standalone)').matches);
+      function syncAppViewport() {
+        const isStandalone = standalone();
+        const vv = window.visualViewport;
+        // Safari's visual viewport excludes its visible browser chrome. A Home Screen
+        // web app has no Safari address/tab bars, so use the full app WebView height.
+        const height = isStandalone ? window.innerHeight : (vv ? vv.height : window.innerHeight);
+        const top = isStandalone ? 0 : (vv ? vv.offsetTop : 0);
+        root.dataset.displayMode = isStandalone ? 'standalone' : 'browser';
+        root.style.setProperty('--app-viewport-top', Math.max(0, top) + 'px');
+        root.style.setProperty('--app-viewport-height', Math.max(1, height) + 'px');
+      }
+      syncAppViewport();
+      window.addEventListener('resize', syncAppViewport, { passive: true });
+      window.addEventListener('orientationchange', () => setTimeout(syncAppViewport, 180), { passive: true });
+      if (window.visualViewport) {
+        window.visualViewport.addEventListener('resize', syncAppViewport, { passive: true });
+        window.visualViewport.addEventListener('scroll', syncAppViewport, { passive: true });
+      }
+      document.addEventListener('visibilitychange', () => {
+        if (document.visibilityState === 'visible') syncAppViewport();
+      });
+    })();
+  </script>
   <meta name="theme-color" content="#101827">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Python刷题">
   <meta name="description" content="Python 程序设计 186 道选择题，支持章节练习、错题本、离线使用和下拉检查更新。">
-  <meta name="app-version" content="6.0.0">
+  <meta name="app-version" content="7.0.0">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="icon" href="icons/icon-192.png">
@@ -20,7 +48,7 @@
     <div class="version-strip" aria-label="应用版本">
       <span class="version-led"></span>
       <span class="version-product">PYTHON QUIZ</span>
-      <strong id="appVersion">V6.0.0</strong>
+      <strong id="appVersion">V7.0.0</strong>
       <span class="version-state" id="globalUpdateStatus">已就绪</span>
     </div>
 
@@ -102,7 +130,7 @@
       <section class="backup-panel" aria-label="学习记录备份与更新">
         <div class="backup-head">
           <div><div class="section-kicker">YOUR DATA</div><strong>学习记录安全管理</strong></div>
-          <span class="version-tag">V6.0.0</span>
+          <span class="version-tag">V7.0.0</span>
         </div>
         <p>更新题库不会主动清空错题本和答题统计。建议在更新前备份，备份文件可用于恢复学习记录。</p>
         <div class="backup-actions">

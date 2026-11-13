@@ -1,8 +1,8 @@
 {
-  "version": "6.0.0",
-  "build": "2026-11-13.3",
+  "version": "7.0.0",
+  "build": "2026-11-13.4",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "界面垂直布局居中优化，修复首页内容上移与大面积留白；全站文字整体放大约12%；保持 pythonQuizIphone.v1 学习记录兼容。"
+  "notes": "重新实现 Safari 与 iOS 主屏幕独立 App 的视口测量。Safari 使用 visualViewport（避开底部地址栏/工具栏），独立 App 使用完整 WebView 高度；安全区域独立处理，底部标签栏由 flex 布局贴合底部安全区。保留 pythonQuizIphone.v1。"
 }
