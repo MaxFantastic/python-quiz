@@ -1,8 +1,8 @@
 {
-  "version": "7.0.0",
-  "build": "2026-11-13.4",
+  "version": "7.0.1",
+  "build": "2026-11-13.5",
   "questionCount": 186,
   "updatedAt": "2026-11-13",
   "repository": "https://github.com/MaxFantastic/python-quiz",
-  "notes": "重新实现 Safari 与 iOS 主屏幕独立 App 的视口测量。Safari 使用 visualViewport（避开底部地址栏/工具栏），独立 App 使用完整 WebView 高度；安全区域独立处理，底部标签栏由 flex 布局贴合底部安全区。保留 pythonQuizIphone.v1。"
+  "notes": "修复 iOS 主屏幕 App 的底部空白：standalone 模式不再使用 window.innerHeight 计算像素高度，而使用 fixed inset 0 填满完整 WebView，并仅通过 safe-area-inset-bottom 为 Home Indicator 留出安全区。更新检测改为同时读取 GitHub Pages 与 raw GitHub 版本文件，采用较高语义版本；远端版本低于本机时忽略，避免 V7 被误报为 V6 新版。保留 pythonQuizIphone.v1。"
 }

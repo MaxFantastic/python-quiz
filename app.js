@@ -1,5 +1,5 @@
-const APP_VERSION = '7.0.0';
-const BUILD_ID = '2026-11-13.4';
+const APP_VERSION = '7.0.1';
+const BUILD_ID = '2026-11-13.5';
 const DATA_URL = './questions.json';
 const GITHUB_RAW_BASE = 'https://raw.githubusercontent.com/MaxFantastic/python-quiz/main';
 const STORAGE_KEY = 'pythonQuizIphone.v1'; // 永远保持不变：继承旧版本地学习记录
@@ -154,10 +154,31 @@ async function exportLearningData(){
 }
 function setGlobalStatus(message){const el=$('globalUpdateStatus');if(el)el.textContent=message;}
 function setUpdateStatus(message,kind=''){const el=$('updateStatus');if(el){el.textContent=message;el.className=kind;}}
+function compareVersions(a,b){
+  const pa=String(a||'0').split('.').map(x=>parseInt(x,10)||0);
+  const pb=String(b||'0').split('.').map(x=>parseInt(x,10)||0);
+  for(let i=0;i<Math.max(pa.length,pb.length);i++){const d=(pa[i]||0)-(pb[i]||0);if(d)return d>0?1:-1;}
+  return 0;
+}
 async function fetchRemoteVersion(){
-  const urls=[`${GITHUB_RAW_BASE}/version.json?ts=${Date.now()}`,`${new URL('version.json',location.href).href}?ts=${Date.now()}`];let last;
-  for(const url of urls){try{const r=await fetch(url,{cache:'no-store',mode:'cors'});if(!r.ok)throw Error(`HTTP ${r.status}`);const j=await r.json();if(typeof j.version!=='string')throw Error('版本文件格式无效');return j;}catch(e){last=e;}}
-  throw last||Error('无法连接 GitHub');
+  const stamp=Date.now();
+  // Pages is the canonical deployed source. Raw GitHub is a fallback; fetch both
+  // and select the highest semantic version so a stale CDN cannot downgrade us.
+  const urls=[
+    `${new URL('./version.json',document.baseURI).href}?_=${stamp}`,
+    `https://raw.githubusercontent.com/MaxFantastic/python-quiz/main/version.json?_=${stamp}`
+  ];
+  const results=await Promise.allSettled(urls.map(async url=>{
+    const r=await fetch(url,{cache:'no-store',mode:'cors',headers:{'Cache-Control':'no-cache','Pragma':'no-cache'}});
+    if(!r.ok)throw Error(`HTTP ${r.status}`);
+    const j=await r.json();
+    if(typeof j.version!=='string'||!/^\d+(\.\d+){1,3}$/.test(j.version))throw Error('版本文件格式无效');
+    return j;
+  }));
+  const valid=results.filter(x=>x.status==='fulfilled').map(x=>x.value);
+  if(!valid.length)throw Error('GitHub Pages 与仓库版本文件均无法读取');
+  valid.sort((a,b)=>compareVersions(a.version,b.version)||(String(a.build||'').localeCompare(String(b.build||''))));
+  return valid[valid.length-1];
 }
 function waitForControllerChange(timeout=18000){return new Promise(resolve=>{let done=false;const finish=v=>{if(done)return;done=true;clearTimeout(timer);navigator.serviceWorker.removeEventListener('controllerchange',onChange);resolve(v);};const onChange=()=>finish(true);const timer=setTimeout(()=>finish(false),timeout);navigator.serviceWorker.addEventListener('controllerchange',onChange,{once:true});});}
 async function checkForUpdates({source='manual',silent=false}={}){
@@ -168,7 +189,15 @@ async function checkForUpdates({source='manual',silent=false}={}){
   try{
     const remote=await fetchRemoteVersion();
     const remoteCount=Number(remote.questionCount||questions.length);
-    const versionChanged=remote.version!==APP_VERSION||String(remote.build||'')!==BUILD_ID||remoteCount!==questions.length;
+    const versionOrder=compareVersions(remote.version,APP_VERSION);
+    // Never label an older remote manifest as an update (the V7/V6 false-positive).
+    if(versionOrder<0){
+      const message=`已忽略 GitHub 上的旧版本信息 V${remote.version}：当前 App 是 V${APP_VERSION}。请确认仓库根目录 version.json 已更新，并等待 Pages 部署完成。`;
+      setUpdateStatus(message,'error');setGlobalStatus('版本信息过旧');
+      if(!silent)alert(message+'\n\n学习记录未被修改。');
+      return;
+    }
+    const versionChanged=versionOrder>0||String(remote.build||'')!==BUILD_ID||remoteCount!==questions.length;
     if(!('serviceWorker'in navigator))throw Error('当前环境不支持离线更新');
     let reg=await navigator.serviceWorker.getRegistration();
     if(!reg)reg=await navigator.serviceWorker.register('./sw.js',{updateViaCache:'none'});

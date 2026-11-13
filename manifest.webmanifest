@@ -1,5 +1,5 @@
 {
-  "name": "Python 选择题训练 V7",
+  "name": "Python 选择题训练 V7.0.1",
   "short_name": "Python刷题",
   "start_url": "./index.html",
   "scope": "./",
@@ -19,5 +19,5 @@
       "type": "image/png"
     }
   ],
-  "description": "针对 Safari 浏览器与 iPhone 主屏幕独立 App 分别测量视口；底部导航贴合安全区域，支持离线练习和自动更新。"
+  "description": "iOS Safari 与主屏幕独立 App 分别适配完整视口；底部导航贴合 Home Indicator 安全区域；支持离线练习和自动更新。"
 }
