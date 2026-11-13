@@ -7,7 +7,7 @@
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Python刷题">
-  <meta name="description" content="Python程序设计六章选择题练习，共70题，支持章节练习、错题本和离线使用。">
+  <meta name="description" content="Python程序设计186题，六份习题与六份课件，支持章节练习、错题本和离线使用。">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
   <link rel="icon" href="icons/icon-192.png">
@@ -26,8 +26,8 @@
       <section class="hero-card">
         <div class="eyebrow">YOUR DAILY PRACTICE</div>
         <h1>把知识点，<br><span>练成条件反射。</span></h1>
-        <p>六份课堂习题 · 70 道选择题<br>随时随地，利用碎片时间巩固 Python。</p>
-        <div class="hero-bottom"><span class="hero-chip"><i></i> 支持离线练习</span><span class="hero-count">70 <small>QUESTIONS</small></span></div>
+        <p><span id="heroSummary">六份课堂习题 + 六份课件精选</span><br>随时随地，利用碎片时间巩固 Python。</p>
+        <div class="hero-bottom"><span class="hero-chip"><i></i> 支持离线练习</span><span class="hero-count"><span id="heroCount">186</span> <small>QUESTIONS</small></span></div>
       </section>
 
       <section class="stats-grid" aria-label="学习统计">
@@ -39,7 +39,7 @@
       <section class="section-block">
         <div class="section-heading"><div><div class="section-kicker">START HERE</div><h2>开始练习</h2></div><span class="section-note">选择一种模式</span></div>
         <div class="mode-grid">
-          <button class="mode-card primary-mode" id="allBtn"><span class="mode-icon">✦</span><span class="mode-title">全部题目</span><span class="mode-desc">70 道题随机练习</span><span class="mode-arrow">↗</span></button>
+          <button class="mode-card primary-mode" id="allBtn"><span class="mode-icon">✦</span><span class="mode-title">全部题目</span><span class="mode-desc" id="allModeCount">186 道题随机练习</span><span class="mode-arrow">↗</span></button>
           <button class="mode-card" id="wrongBtn"><span class="mode-icon wrong-icon">↻</span><span class="mode-title">错题复习</span><span class="mode-desc"><b id="wrongCount">0</b> 道待巩固</span><span class="mode-arrow">↗</span></button>
         </div>
       </section>
@@ -49,11 +49,16 @@
         <div id="chapterList" class="chapter-list"></div>
       </section>
 
+      <section class="section-block chapters-block">
+        <div class="section-heading"><div><div class="section-kicker">COURSE SLIDES</div><h2>课件专项</h2></div><span class="section-note">第0讲至第5讲 · 基础巩固</span></div>
+        <div id="lectureList" class="chapter-list"></div>
+      </section>
+
       <section class="resume-card hidden" id="resumeCard">
         <div class="resume-copy"><div class="section-kicker">IN PROGRESS</div><strong>继续上次练习</strong><span id="resumeMeta">上次练习进度已保存</span></div>
         <button id="resumeBtn" class="resume-button">继续 <span>→</span></button>
       </section>
-      <footer class="home-footer">题目依据你提供的《习题1—习题6》整理<br>部分原题存在答案疑点，已在答题时标注</footer>
+      <footer class="home-footer">原习题70道 + 六份课件精选116道<br>课件新题附解析与出处，部分旧题争议已标注</footer>
     </main>
 
     <main id="quizView" class="view">

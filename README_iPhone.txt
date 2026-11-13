@@ -1,26 +1,36 @@
-Python 选择题训练 · iPhone 版
+﻿Python 选择题训练 · iPhone 版 V2
 
-内容：根据《习题1》至《习题6》整理的 70 道选择题。
+更新日期：2026-11-13
+题库规模：186 道（原始习题 70 道 + 新增课件精选 116 道）
 
-如何在 iPhone 上使用：
-本项目是静态网页/PWA，不是 App Store 安装包。要使用“添加到主屏幕”和离线缓存，需要先通过 HTTPS 网站打开。
+题目来源：
+- 原始《习题1》至《习题6》：70 题，原题 ID 保持不变。
+- 新增《第0讲 绪论》：12 题。
+- 新增《第1讲 基础知识》：24 题。
+- 新增《第2讲 算法和顺序结构》：14 题。
+- 新增《第3讲 选择结构》：16 题。
+- 新增《第4讲 循环结构》：19 题。
+- 新增《第5讲 列表》：31 题。
 
-推荐：GitHub Pages（免费）
-1. 在电脑上解压本压缩包。
-2. 登录 GitHub，新建一个 Public repository，例如 python-quiz。
-3. 将本文件夹里的所有内容（index.html、app.js、styles.css、questions.json、manifest.webmanifest、sw.js、icons 文件夹）上传到仓库根目录。注意不要只上传外层文件夹。
-4. 打开仓库 Settings → Pages。
-5. 在 Build and deployment 中选择 Deploy from a branch；Branch 选择 main，目录选择 /(root)，保存。
-6. 等待部署完成，GitHub 会给出一个 https://用户名.github.io/python-quiz/ 网址。
-7. 在 iPhone 上用 Safari 打开该网址，点击分享按钮 → 添加到主屏幕 → 添加。
+新增内容：
+1. 首页题目总数自动从题库数据获取，不再写死 70。
+2. 旧习题章节与新课件专项分开展示。
+3. 每一道课件新题提供答案解析和原课件页码。
+4. 更新离线缓存策略与版本号，避免长期使用旧题库缓存。
+5. 继续使用旧版保存键 pythonQuizIphone.v1，保留旧错题和学习统计。
 
-使用说明：
-- 全部题目：70 题随机练习。
-- 章节练习：按习题 1 至习题 6 练习。
-- 错题复习：自动收集做错的题目。
-- 进度、统计、错题记录保存在当前设备浏览器本地（localStorage），不会上传。
-- 首次成功打开并加载完成后，Service Worker 会缓存题库文件；之后可离线打开。iOS 可能会在系统存储压力下清理网站缓存，建议偶尔联网打开一次。
-- 如需清空统计和错题：在 iPhone 设置中清除 Safari 对应网站数据；目前界面不提供一键清空，避免误删学习记录。
+更新已有 GitHub Pages：
+1. 使用 Python_Quiz_Update_V2.zip（包含 6 个文件）。
+2. 解压后在 GitHub 仓库 MaxFantastic/python-quiz 的 Code 页面选择 Add file -> Upload files。
+3. 把解压出的六个文件上传到仓库根目录（不是整个 zip）：
+   questions.json、index.html、app.js、styles.css、sw.js、README_iPhone.txt。
+4. GitHub 对同名文件进行替换/覆盖，核对变更后点击 Commit changes。
+5. 等待 Actions/Pages 显示部署成功。
+6. 在 iPhone 的 Safari 打开 https://maxfantastic.github.io/python-quiz/ ，刷新后应看到 186 QUESTIONS。
+7. 已添加到主屏幕的旧 App 无需重新安装。若仍显示 70 题，请先联网、关闭 App、在 Safari 刷新网址，再重新打开 App；不要清除 Safari 网站数据，以免丢失统计。
 
-题目说明：
-部分原题存在答案标注疑点或多个正确选项，程序会提示并将争议题排除在正确率计算之外。题目文字及选项依据用户提供的六份习题整理。
+注意：
+- 练习记录保存于本机浏览器 localStorage，不会自动同步到其他设备，也不会上传到 GitHub。
+- 沿用原网址与保存键可读取已有记录，但 iOS 在储存空间紧张时可能会清除离线缓存。
+- 如从头上传新仓库，请改用 Python_Quiz_Complete_V2.zip，保留 icons 文件夹，确保 index.html 在仓库根目录。
+- 原习题中存在答案争议的题仍按照旧版规则显示与处理；新增课件题已经给出单选答案与解析。

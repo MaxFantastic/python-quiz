@@ -1,5 +1,5 @@
 const DATA_URL = 'questions.json';
-const STORAGE_KEY = 'pythonQuizIphone.v1';
+const STORAGE_KEY = 'pythonQuizIphone.v1'; // 保持不变，继承旧版学习记录
 let data, questions, chapters, state, session = null;
 const $ = id => document.getElementById(id);
 const views = ['homeView','quizView','resultView'];
@@ -14,9 +14,24 @@ function eligible(q){return q.answer!==null && q.answer!==undefined;}
 function renderHome(){
  const stats=Object.values(state.stats);const attempted=stats.filter(x=>x.attempts>0);const total=attempted.reduce((s,x)=>s+x.attempts,0);const correct=attempted.reduce((s,x)=>s+x.correct,0);const unique=attempted.length;
  $('statAnswered').textContent=total;$('statCorrect').textContent=correct;$('statAccuracy').textContent=total?Math.round(correct/total*100)+'%':'—';
- $('wrongCount').textContent=state.wrong.length;
- $('chapterList').innerHTML='';
- Object.entries(chapters).forEach(([num,name])=>{const qs=questions.filter(q=>q.chapter===Number(num));const done=qs.filter(q=>state.stats[q.id]?.attempts).length;const b=document.createElement('button');b.className='chapter-item';b.innerHTML=`<span class="chapter-index">${String(num).padStart(2,'0')}</span><span class="chapter-copy"><span class="chapter-name">${escapeHTML(name)}</span><span class="chapter-sub">习题 ${num} · 已练 ${done}/${qs.length}</span></span><span class="chapter-count">${qs.length} 题</span><span class="chapter-arrow">›</span>`;b.addEventListener('click',()=>startSession(qs.map(q=>q.id),`习题 ${num} · ${name}`));$('chapterList').appendChild(b);});
+ $('wrongCount').textContent=state.wrong.filter(id=>!!getQ(id)).length;
+ const sourceCount=questions.filter(q=>q.chapter<=6).length;
+ const slideCount=questions.length-sourceCount;
+ $('heroCount').textContent=questions.length;
+ $('heroSummary').textContent=`课堂习题 ${sourceCount} 道 + 课件精选 ${slideCount} 道`;
+ $('allModeCount').textContent=`${questions.length} 道题随机练习`;
+ ['chapterList','lectureList'].forEach(id=>$(id).innerHTML='');
+ Object.entries(chapters).forEach(([num,name])=>{
+  const n=Number(num),isLecture=n>=7;
+  const qs=questions.filter(q=>q.chapter===n);
+  if(!qs.length)return;
+  const done=qs.filter(q=>state.stats[q.id]?.attempts).length;
+  const label=isLecture?`课件第 ${n-7} 讲`:`习题 ${num}`;
+  const b=document.createElement('button');b.className='chapter-item';
+  b.innerHTML=`<span class="chapter-index">${isLecture?'P'+(n-7):String(num).padStart(2,'0')}</span><span class="chapter-copy"><span class="chapter-name">${escapeHTML(name)}</span><span class="chapter-sub">${label} · 已练 ${done}/${qs.length}</span></span><span class="chapter-count">${qs.length} 题</span><span class="chapter-arrow">›</span>`;
+  b.addEventListener('click',()=>startSession(qs.map(q=>q.id),`${isLecture?name:`习题 ${num} · ${name}`}`));
+  $(isLecture?'lectureList':'chapterList').appendChild(b);
+ });
  $('resumeCard').classList.toggle('hidden',!state.session || !state.session.ids?.length || state.session.index>=state.session.ids.length);
  if(state.session){$('resumeMeta').textContent=`${state.session.title} · 已完成 ${state.session.index}/${state.session.ids.length} 题`;}
 }
@@ -27,7 +42,7 @@ function currentQ(){return getQ(session.ids[session.index]);}
 function renderQuestion(){
  const q=currentQ();if(!q){finishSession();return;}
  const n=session.index+1,total=session.ids.length;const pct=Math.round((n-1)/total*100);
- $('progressText').textContent=`第 ${n} / ${total} 题`;$('progressPercent').textContent=`${pct}%`;$('progressBar').style.width=pct+'%';$('quizModeLabel').textContent=session.title;$('questionChapter').textContent=`习题 ${q.chapter}`;$('questionNumber').textContent=`QUESTION ${String(n).padStart(2,'0')}`;$('questionText').textContent=q.text;
+ $('progressText').textContent=`第 ${n} / ${total} 题`;$('progressPercent').textContent=`${pct}%`;$('progressBar').style.width=pct+'%';$('quizModeLabel').textContent=session.title;$('questionChapter').textContent=q.source?`课件 · 第${q.chapter-7}讲`:`习题 ${q.chapter}`;$('questionNumber').textContent=`QUESTION ${String(n).padStart(2,'0')}`;$('questionText').textContent=q.text;
  const list=$('optionsList');list.innerHTML='';$('feedback').className='feedback hidden';$('feedback').textContent='';
  letters.forEach(letter=>{if(!(letter in q.options))return;const b=document.createElement('button');b.className='option-button';b.innerHTML=`<span class="option-letter">${letter}</span><span class="option-content">${escapeHTML(q.options[letter])}</span>`;b.addEventListener('click',()=>chooseAnswer(letter));list.appendChild(b);});
  const prev=session.answers[q.id];if(prev)showFeedback(prev.choice,true);
@@ -37,9 +52,10 @@ function chooseAnswer(letter){const q=currentQ();if(session.answers[q.id])return
  if(isScored){const stat=state.stats[q.id]||{attempts:0,correct:0};stat.attempts++;if(correct){stat.correct++;state.wrong=state.wrong.filter(id=>id!==q.id);}state.stats[q.id]=stat;}state.session=session;saveState();showFeedback(letter,false);$('nextBtn').disabled=false;$('nextBtn').textContent=session.index===session.ids.length-1?'查看结果':'下一题';}
 function showFeedback(choice,restoring){const q=currentQ();const scored=eligible(q);const buttons=[...$('optionsList').querySelectorAll('.option-button')];buttons.forEach(b=>{const l=b.querySelector('.option-letter').textContent;b.disabled=true;if(scored&&l===q.answer)b.classList.add('correct');if(l===choice&&scored&&choice!==q.answer)b.classList.add('incorrect');if(l===choice&&!scored)b.classList.add('selected');});
  const f=$('feedback');f.className='feedback '+(scored?(choice===q.answer?'good':'bad'):'neutral');
- if(!scored){f.innerHTML=`<strong>本题存在答案争议，不计入成绩</strong>${escapeHTML(q.note||'原题答案可能存在疑点。')}${q.source_answer?`<br>原资料标注答案：${escapeHTML(q.source_answer)}`:''}`;}
- else if(choice===q.answer){f.innerHTML=`<strong>回答正确 ✓</strong>${q.note?escapeHTML(q.note):'很好，继续保持。'}`;}
- else{f.innerHTML=`<strong>回答错误 · 正确答案：${q.answer}</strong>${q.note?escapeHTML(q.note):'记下这个知识点，稍后可以在错题本中复习。'}`;}
+ const origin=q.source?`<div class="feedback-origin">📖 ${escapeHTML(q.source)} · 第 ${Number(q.source_page)} 页</div>`:'';
+ if(!scored){f.innerHTML=`<strong>本题存在答案争议，不计入成绩</strong>${escapeHTML(q.note||'原题答案可能存在疑点。')}${q.source_answer?`<br>原资料标注答案：${escapeHTML(q.source_answer)}`:''}${origin}`;}
+ else if(choice===q.answer){f.innerHTML=`<strong>回答正确 ✓</strong>${q.note?escapeHTML(q.note):'很好，继续保持。'}${origin}`;}
+ else{f.innerHTML=`<strong>回答错误 · 正确答案：${q.answer}</strong>${q.note?escapeHTML(q.note):'记下这个知识点，稍后可以在错题本中复习。'}${origin}`;}
  if(restoring){$('nextBtn').disabled=false;}
 }
 function nextQuestion(){if(!session.answers[currentQ().id])return;session.index++;state.session=session;saveState();if(session.index>=session.ids.length)finishSession();else renderQuestion();}
